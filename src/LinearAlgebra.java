@@ -74,4 +74,49 @@ public abstract class LinearAlgebra {
         }
         return new Vector(b.getCols(), elements, b.isRow());
     }
+
+    public static Matrix dot(Matrix a, Matrix b) {
+        double[] elements = new double[a.getRows() * b.getCols()];
+        int index = 0;
+        for(int i = 0; i < a.getRows() * b.getCols(); i++){
+            elements[i] = 0;
+        }
+        Matrix result = new Matrix(a.getRows(), b.getCols(), elements);
+
+        if (a.getCols() == b.getRows()) {
+            for (int i = 0; i < a.getRows(); i++) {
+                for (int k = 0; k < b.getCols(); k++) {
+                    for (int j = 0; j < a.getCols(); j++) {
+                        result.setElement(i,k, result.getElement(i,k) + a.getElement(i,j) * b.getElement(j,k));
+                    }
+                }
+            }
+        } else{
+            throw new IllegalArgumentException("O número de colunas de A precisa ser igual a quantidade de linhas de B");
+        }
+        return result;
+    }
+
+    public static Matrix amp(Matrix coefficients, Vector results){
+        if(results.isRow()){
+            throw new IllegalArgumentException("O vetor precisa ser em coluna");
+        }
+
+        double[] elements = new double[coefficients.getRows() * coefficients.getCols() + results.getDim()];
+        Matrix result = new Matrix(coefficients.getRows(), coefficients.getCols() + 1, elements);
+
+        for(int i = 0; i < coefficients.getRows(); i++){
+            for(int j = 0; j < coefficients.getCols(); j++){
+                if(j != coefficients.getCols()){
+                    result.setElement(i,j, coefficients.getElement(i,j));
+                }
+            }
+        }
+        for(int i = 0; i < results.getDim(); i++){
+            result.setElement(i, coefficients.getCols(), results.getElement(i));
+        }
+
+        return result;
+    }
+
 }

@@ -18,6 +18,10 @@ public class Vector extends Matrix{
         this.elements[i] = value;
     }
 
+    public int getDim(){
+        return this.dim;
+    }
+
     public boolean isRow() {
         return this.isRow;
     }
