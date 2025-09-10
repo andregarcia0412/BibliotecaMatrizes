@@ -21,6 +21,10 @@ public class Matrix {
                 }
             }
         }
+
+        if(!(elements.length == this.rows * this.cols)){
+            throw new IllegalArgumentException("A quantidade de elementos da matriz é diferente de i * j.");
+        }
     }
 
     public double getElement(int i, int j) {
@@ -31,11 +35,11 @@ public class Matrix {
         }
     }
 
-    public double setElement(int i, int j, int value) {
+    public void setElement(int i, int j, double value) {
         if(i < 0 || i > this.rows - 1 || j < 0 || j >  this.cols - 1) {
             throw new IllegalArgumentException("Índices fora dos limites");
         } else {
-            return this.mat[i][j] = value;
+            this.mat[i][j] = value;
         }
     }
 
@@ -48,13 +52,27 @@ public class Matrix {
     }
 
     public void print(){
-        for(int i = 0; i < this.rows; i++){
-            if (i > 0){
+        if (this instanceof Vector){ //vetor sendo linha ou coluna, só muda a forma de imprimir
+            if(((Vector) this).isRow()){
+                for(int i = 0; i < this.getCols(); i++){
+                    System.out.print(this.getElement(0,i) + " ");
+                }
                 System.out.print("\n");
+            } else{
+                for(int i = 0; i < this.getRows(); i++){
+                    System.out.println(this.getElement(i,0));
+                }
             }
-            for(int j = 0; j < this.cols; j++){
-                System.out.print(this.mat[i][j] + " ");
+        } else{
+            for(int i = 0; i < this.rows; i++){
+                if (i > 0){
+                    System.out.print("\n");
+                }
+                for(int j = 0; j < this.cols; j++){
+                    System.out.print(this.mat[i][j] + " ");
+                }
             }
+            System.out.print("\n");
         }
     }
 }
