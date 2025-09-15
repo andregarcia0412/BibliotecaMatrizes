@@ -1,7 +1,9 @@
 public abstract class LinearAlgebra {
     private LinearAlgebra(){}
 
+
     public static Matrix transpose(Matrix a){
+        //o elemento na posição (i,j) da transposta será o elemento na posição (j,i) da matriz original.
         double[] elements = new double[a.getCols() * a.getRows()];
         int index = 0;
         for(int i = 0; i < a.getCols(); i++){
@@ -13,6 +15,7 @@ public abstract class LinearAlgebra {
     }
 
     public static Vector transpose(Vector v){
+        //transforma o vetor linha em coluna e o vetor coluna em linha
         double[] elements = new double[v.getCols() * v.getRows()];
         int index = 0;
         for(int i = 0; i < v.getCols(); i++){
@@ -24,6 +27,7 @@ public abstract class LinearAlgebra {
     }
 
     public static Matrix sum(Matrix a, Matrix b){
+        //pega o elemento i j da matriz a e soma ele com o elemento i j da matriz b
         double[] elements = new double[a.getCols() * a.getRows()];
         int index = 0;
         if(!(a.getRows() == b.getRows() && a.getCols() == b.getCols())){
@@ -38,6 +42,7 @@ public abstract class LinearAlgebra {
     }
 
     public static Vector sum(Vector a, Vector b){
+        //soma elemento a elemento de vetores
         double[] elements = new double[a.getCols() * a.getRows()];
         if(!(a.getRows() == b.getRows() && a.getCols() == b.getCols())){
             throw new ArithmeticException("A quantidade de linhas e colunas de A e B são precisam ser iguais.");
@@ -57,6 +62,7 @@ public abstract class LinearAlgebra {
     }
 
     public static Matrix times(double a, Matrix b){
+        //multiplica o elemento i j por um escalar
         double[] elements = new double[b.getRows() * b.getCols()];
         int index = 0;
         for(int i = 0; i < b.getRows(); i++){
@@ -68,6 +74,7 @@ public abstract class LinearAlgebra {
     }
 
     public static Vector times(double a, Vector b){
+        //multiplica o elemento i por um escalar
         double[] elements = new double[b.getRows() * b.getCols()];
         for(int i = 0; i < b.getCols(); i++){
             elements[i] = b.getElement(i) * a;
@@ -76,6 +83,9 @@ public abstract class LinearAlgebra {
     }
 
     public static Matrix dot(Matrix a, Matrix b) {
+        //multiplicao de matrizes segundo o código do professor
+        //cada elemento (i,k) da matriz resultado é calculado por:
+        //result[i][k] = Σ (a[i][j] * b[j][k]) para j de 0 até n-1.
         double[] elements = new double[a.getRows() * b.getCols()];
         int index = 0;
         for(int i = 0; i < a.getRows() * b.getCols(); i++){
@@ -84,9 +94,9 @@ public abstract class LinearAlgebra {
         Matrix result = new Matrix(a.getRows(), b.getCols(), elements);
 
         if (a.getCols() == b.getRows()) {
-            for (int i = 0; i < a.getRows(); i++) {
-                for (int k = 0; k < b.getCols(); k++) {
-                    for (int j = 0; j < a.getCols(); j++) {
+            for (int i = 0; i < a.getRows(); i++) { //percorre as linhas da matriz A
+                for (int k = 0; k < b.getCols(); k++) {//percorre as colunas da matriz B
+                    for (int j = 0; j < a.getCols(); j++) {//percorre os elementos da linha i de A e da coluna k de B
                         result.setElement(i,k, result.getElement(i,k) + a.getElement(i,j) * b.getElement(j,k));
                     }
                 }
@@ -98,6 +108,7 @@ public abstract class LinearAlgebra {
     }
 
     public static Matrix amp(Matrix coefficients, Vector results){
+        //mantem a matriz original, adiciona 1 nas colunas e coloca o vetor como essa coluna
         if(results.isRow()){
             throw new IllegalArgumentException("O vetor precisa ser em coluna");
         }
@@ -107,12 +118,12 @@ public abstract class LinearAlgebra {
 
         for(int i = 0; i < coefficients.getRows(); i++){
             for(int j = 0; j < coefficients.getCols(); j++){
-                if(j != coefficients.getCols()){
+                if(j != coefficients.getCols()){ //coloca os valores em todos os elementos que não são da nova coluna adicionada
                     result.setElement(i,j, coefficients.getElement(i,j));
                 }
             }
         }
-        for(int i = 0; i < results.getDim(); i++){
+        for(int i = 0; i < results.getDim(); i++){ //adiciona os elementos nessa coluna
             result.setElement(i, coefficients.getCols(), results.getElement(i));
         }
 
