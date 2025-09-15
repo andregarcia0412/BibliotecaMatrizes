@@ -147,7 +147,7 @@ public abstract class LinearAlgebra {
             double pivotValue = result.getElement(pivot, pivot);
 
             if (pivotValue == 0) {
-                throw new ArithmeticException("Pivô zero.");
+                throw new ArithmeticException("Pivô zero. Matriz impossivel ou Possivel Indeterminada.");
             }
 
             // Normaliza a linha do pivô
