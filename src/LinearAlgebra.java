@@ -118,5 +118,64 @@ public abstract class LinearAlgebra {
 
         return result;
     }
+    public static Matrix gauss(Matrix a) {
+        int rows = a.getRows();
+        int cols = a.getCols();
 
+        // Cria uma cópia da matriz
+        double[] elements = new double[rows * cols];
+        int index = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                elements[index++] = a.getElement(i, j);
+            }
+        }
+        Matrix result = new Matrix(rows, cols, elements);
+
+        for (int pivot = 0; pivot < Math.min(rows, cols); pivot++) {
+            double pivotValue = result.getElement(pivot, pivot);
+
+            if (pivotValue == 0) {
+                throw new ArithmeticException("Pivô zero.");
+            }
+
+            // Normaliza a linha do pivô
+            for (int j = pivot; j < cols; j++) {
+                result.setElement(pivot, j, result.getElement(pivot, j) / pivotValue);
+            }
+
+            // Elimina as linhas abaixo do pivô
+            for (int i = pivot + 1; i < rows; i++) {
+                double factor = result.getElement(i, pivot);
+                for (int j = pivot; j < cols; j++) {
+                    double value = result.getElement(i, j) - factor * result.getElement(pivot, j);
+                    result.setElement(i, j, value);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    public static Matrix solve(Matrix augmented) {
+        int rows = augmented.getRows();
+        int cols = augmented.getCols();
+
+        // Primeiro aplica gaussiana
+        Matrix escalonada = gauss(augmented);
+
+        double[] solution = new double[rows];
+
+        // Substituição regressiva
+        for (int i = rows - 1; i >= 0; i--) {
+            double sum = 0;
+            for (int j = i + 1; j < cols - 1; j++) {
+                sum += escalonada.getElement(i, j) * solution[j];
+            }
+            solution[i] = escalonada.getElement(i, cols - 1) - sum;
+        }
+
+        // Converte o vetor solução em matriz coluna
+        return new Matrix(rows, 1, solution);
+    }
 }
