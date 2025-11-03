@@ -374,4 +374,124 @@ public class Transformation {
                 resultMatrix.getElement(2, 0)
         };
     }
+    public double[] reflection2DX(double[] vector) {
+        if (vector.length != 2) {
+            throw new IllegalArgumentException("Vetor 2D precisa ter dois elementos");
+        }
+
+        double[] homogeneous = {vector[0], vector[1], 1.0};
+
+        double[] matrixElements = {
+                1, 0, 0,
+                0, -1, 0,
+                0, 0, 1
+        };
+
+        Matrix reflectionMatrix = new Matrix(3, 3, matrixElements);
+        Vector homogeneousVector = new Vector(3, homogeneous, false);
+        Matrix result = LinearAlgebra.dot(reflectionMatrix, homogeneousVector);
+
+        return new double[]{
+                result.getElement(0, 0),
+                result.getElement(1, 0)
+        };
+    }
+
+    public double[] reflection2DY(double[] vector) {
+        if (vector.length != 2) {
+            throw new IllegalArgumentException("Vetor 2D precisa ter dois elementos");
+        }
+
+        double[] homogeneous = {vector[0], vector[1], 1.0};
+
+        double[] matrixElements = {
+                -1, 0, 0,
+                0, 1, 0,
+                0, 0, 1
+        };
+
+        Matrix reflectionMatrix = new Matrix(3, 3, matrixElements);
+        Vector homogeneousVector = new Vector(3, homogeneous, false);
+        Matrix result = LinearAlgebra.dot(reflectionMatrix, homogeneousVector);
+
+        return new double[]{
+                result.getElement(0, 0),
+                result.getElement(1, 0)
+        };
+    }
+
+    public double[] reflection3DX(double[] vector) {
+        if (vector.length != 3) {
+            throw new IllegalArgumentException("Vetor 3D precisa ter três elementos");
+        }
+
+        double[] homogeneous = {vector[0], vector[1], vector[2], 1.0};
+
+        double[] matrixElements = {
+                1, 0, 0, 0,
+                0, -1, 0, 0,
+                0, 0, -1, 0,
+                0, 0, 0, 1
+        };
+
+        Matrix reflectionMatrix = new Matrix(4, 4, matrixElements);
+        Vector homogeneousVector = new Vector(4, homogeneous, false);
+        Matrix result = LinearAlgebra.dot(reflectionMatrix, homogeneousVector);
+
+        return new double[]{
+                result.getElement(0, 0),
+                result.getElement(1, 0),
+                result.getElement(2, 0)
+        };
+    }
+
+    public double[] reflection3DY(double[] vector) {
+        if (vector.length != 3) {
+            throw new IllegalArgumentException("Vetor 3D precisa ter três elementos");
+        }
+
+        double[] homogeneous = {vector[0], vector[1], vector[2], 1.0};
+
+        double[] matrixElements = {
+                -1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, -1, 0,
+                0, 0, 0, 1
+        };
+
+        Matrix reflectionMatrix = new Matrix(4, 4, matrixElements);
+        Vector homogeneousVector = new Vector(4, homogeneous, false);
+        Matrix result = LinearAlgebra.dot(reflectionMatrix, homogeneousVector);
+
+        return new double[]{
+                result.getElement(0, 0),
+                result.getElement(1, 0),
+                result.getElement(2, 0)
+        };
+    }
+
+    public double[] reflection3DZ(double[] vector) {
+        if (vector.length != 3) {
+            throw new IllegalArgumentException("Vetor 3D precisa ter três elementos");
+        }
+
+        double[] homogeneous = {vector[0], vector[1], vector[2], 1.0};
+
+        double[] matrixElements = {
+                -1, 0, 0, 0,
+                0, -1, 0, 0,
+                0, 0, 1, 0,
+                0, 0, 0, 1
+        };
+
+        Matrix reflectionMatrix = new Matrix(4, 4, matrixElements);
+        Vector homogeneousVector = new Vector(4, homogeneous, false);
+        Matrix result = LinearAlgebra.dot(reflectionMatrix, homogeneousVector);
+
+        return new double[]{
+                result.getElement(0, 0),
+                result.getElement(1, 0),
+                result.getElement(2, 0)
+        };
+    }
 }
