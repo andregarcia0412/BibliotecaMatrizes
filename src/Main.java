@@ -1,54 +1,57 @@
 public class Main {
     public static void main(String[] args) {
-        Matrix a = new Matrix(4,4, new double[]{1,2,3,4,2,1,1,3,3,4,1,2,1,1,1,1});
-        Matrix b = new Matrix(4,4, new double[]{16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1});
-        Vector v = new Vector(4, new double[]{10,9,10,4}, false);
-
-        System.out.println("==== APRESENTAÇÃO BIBLIOTECA DE ALGEBRA LINEAR ====\n");
-
-        System.out.println("Utilizando a matriz A:\n");
-        a.print();
-        System.out.println();
-
-        System.out.println("Sua transposta é:\n");
-        LinearAlgebra.transpose(a).print();
-        System.out.println();
-
-        System.out.println("Usando a matriz B:\n");
-        b.print();
-        System.out.println();
-
-        System.out.println("E somando com A:\n");
-        LinearAlgebra.sum(a,b).print();
-        System.out.println();
-
-        System.out.println("Multiplicando a matriz A por 2:\n");
-        LinearAlgebra.times(2,a).print();
-        System.out.println();
-
-        System.out.println("Multiplicando A por B:\n");
-        LinearAlgebra.dot(a,b).print();
-        System.out.println();
-
-        System.out.println("Usando o vetor V como as respostas para matriz ampliada temos:\n");
+        System.out.println("========== Implementação de Transformações Lineares ==========");
+        System.out.println("Usando o vetor V:");
+        Vector v = new Vector(2, new double[]{2, 3},false);
+        Vector u = new Vector(3, new double[]{1,2,3}, false);
         v.print();
-        System.out.println();
 
-        System.out.println("Matriz ampliada de A com V:\n");
-        Matrix augmented = LinearAlgebra.amp(a, v);
-        augmented.print();
-        System.out.println();
+        System.out.println("E o vetor U:");
+        u.print();
 
-        System.out.println("Aplicando o método gauss nessa matriz ampliada, obtemos a matriz em forma escada:\n");
-        Matrix escalonada = LinearAlgebra.gauss(augmented);
-        escalonada.print();
-        System.out.println();
+        System.out.println("======== Translação ========");
+        System.out.println("Aplicando uma translação 2D em V com dx = 4 e dy = -1:");
+        Transformation.translation2D(v, 4, -1).print();
+        System.out.println("Aplicando uma translação 3D em U com dx = -2, dy = 3 e dz = 1:");
+        Transformation.translation3D(u, -2, 3, 1).print();
 
-        System.out.println("E aplicando o método solve, obtemos a resolução do sistema linear:\n");
-        Matrix solution = LinearAlgebra.solve(augmented);
-        solution.print();
-        System.out.println();
+        System.out.println("======== Rotação ========");
+        System.out.println("Aplicando uma rotação 2D com um ângulo de 90 graus em V: ");
+        Transformation.rotation2D(v, 90).print();
+        System.out.println("Aplicando uma rotação 3D no eixo X com um ângulo de 90 graus em U:");
+        Transformation.rotation3DX(u, 90).print();
+        System.out.println("Aplicando uma rotação 3D no eixo Y com um ângulo de 90 graus em U:");
+        Transformation.rotation3DY(u, 90).print();
+        System.out.println("Aplicando uma rotação 3D no eixo Z com um ângulo de 90 graus em U:");
+        Transformation.rotation3DZ(u, 90).print();
 
-        System.out.println("===================================================\n");
+        System.out.println("======== Reflexão ========");
+        System.out.println("Aplicando uma reflexão 2D no eixo X em V:");
+        Transformation.reflection2DX(v).print();
+        System.out.println("Aplicando uma reflexão 2D no eixo Y em V:");
+        Transformation.reflection2DY(v).print();
+        System.out.println("Aplicando uma reflexão 3D no eixo X em U:");
+        Transformation.reflection3DX(u).print();
+        System.out.println("Aplicando uma reflexão 3D no eixo Y em U:");
+        Transformation.reflection3DY(u).print();
+        System.out.println("Aplicando uma reflexão 3D no eixo Z em U:");
+        Transformation.reflection3DZ(u).print();
+
+        System.out.println("======== Projeção ========");
+        System.out.println("Aplicando uma projeção 2D no eixo X em V:");
+        Transformation.projection2DX(v).print();
+        System.out.println("Aplicando uma projeção 2D no eixo Y em V:");
+        Transformation.projection2DY(v).print();
+        System.out.println("Aplicando uma projeção 3D no eixo X em U:");
+        Transformation.projection3DX(u).print();
+        System.out.println("Aplicando uma projeção 3D no eixo Y em U:");
+        Transformation.projection3DY(u).print();
+        System.out.println("Aplicando uma projeção 3D no eixo Z em U:");
+        Transformation.projection3DZ(u).print();
+
+        System.out.println("======== Cisalhamento ========");
+        System.out.println("Aplicando um cisalhamento 2D em V com kx = 1.5 e ky = 2.5:");
+        Transformation.shearing(v, 1.5, 2.5).print();
+
     }
 }
