@@ -55,12 +55,12 @@ public class Matrix {
         if (this instanceof Vector){ //vetor sendo linha ou coluna, só muda a forma de imprimir
             if(((Vector) this).isRow()){
                 for(int i = 0; i < this.getCols(); i++){
-                    System.out.printf("%.4f ", this.getElement(0,i));
+                    System.out.printf("%.8f ", this.getElement(0,i));
                 }
                 System.out.print("\n");
             } else{
                 for(int i = 0; i < this.getRows(); i++){
-                    System.out.printf("%.4f\n", this.getElement(i,0));
+                    System.out.printf("%.8f\n", this.getElement(i,0));
                 }
             }
         } else{
@@ -69,7 +69,7 @@ public class Matrix {
                     System.out.print("\n");
                 }
                 for(int j = 0; j < this.cols; j++){
-                    System.out.printf("%.4f ", this.mat[i][j]);
+                    System.out.printf("%.8f ", this.mat[i][j]);
                 }
             }
             System.out.print("\n");
