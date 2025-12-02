@@ -1,18 +1,19 @@
 public abstract class PageRank {
 
-    public static Vector calcularPageRank(Matrix matrizAdjascencia, double criterioParada){
+    public static Vector calcularPageRank(Matrix matrizAdjacencia, double criterioParada){
 
         double somaCentro = 0;
-        double[] auxCentro = new double[matrizAdjascencia.getRows()];
+        double[] auxCentro = new double[matrizAdjacencia.getRows()];
 
         double somaAutoridade = 0;
-        double[] auxAutoridade = new double[matrizAdjascencia.getRows()];
+        double[] auxAutoridade = new double[matrizAdjacencia.getRows()];
 
-        Matrix matrizAdjascenciaTransposta = LinearAlgebra.transpose(matrizAdjascencia);
+        Matrix matrizAdjascenciaTransposta = LinearAlgebra.transpose(matrizAdjacencia);
 
-        for(int i = 0; i < matrizAdjascencia.getRows(); i++){
-            for(int j = 0; j < matrizAdjascencia.getCols(); j++){
-                somaCentro += matrizAdjascencia.getElement(i,j);
+        //criando os vetores
+        for(int i = 0; i < matrizAdjacencia.getRows(); i++){
+            for(int j = 0; j < matrizAdjacencia.getCols(); j++){
+                somaCentro += matrizAdjacencia.getElement(i,j);
                 somaAutoridade += matrizAdjascenciaTransposta.getElement(i,j);
             }
             auxCentro[i] = somaCentro;
@@ -22,21 +23,21 @@ public abstract class PageRank {
             somaAutoridade = 0;
         }
 
-        Vector vetorCentro = new Vector(matrizAdjascencia.getRows(), auxCentro, false);
+        Vector vetorCentro = new Vector(matrizAdjacencia.getRows(), auxCentro, false);
         Vector vetorAutoridade = new Vector(matrizAdjascenciaTransposta.getRows(), auxAutoridade, false);
 
         int qtdIteracoes = 0;
         Vector anVector = null;
         for(int i = 0; i < 1000; i++){
-            Matrix u = LinearAlgebra.dot(matrizAdjascencia, vetorAutoridade);
+            Matrix u = LinearAlgebra.dot(matrizAdjacencia, vetorAutoridade);
 
-            double r = Math.sqrt(LinearAlgebra.dot(LinearAlgebra.transpose(u),u).getElement(0,0));
-            Matrix hn = LinearAlgebra.times(1/r, u);
+            double r = Math.sqrt(LinearAlgebra.dot(LinearAlgebra.transpose(u),u).getElement(0,0)); //norma de u
+            Matrix hn = LinearAlgebra.times(1/r, u); //normalizando u
 
-            Matrix v = LinearAlgebra.dot(LinearAlgebra.transpose(matrizAdjascencia), hn);
+            Matrix v = LinearAlgebra.dot(LinearAlgebra.transpose(matrizAdjacencia), hn);
 
-            double s = Math.sqrt(LinearAlgebra.dot(LinearAlgebra.transpose(v), v).getElement(0,0));
-            Matrix an = LinearAlgebra.times(1/s, v);
+            double s = Math.sqrt(LinearAlgebra.dot(LinearAlgebra.transpose(v), v).getElement(0,0)); //norma de v
+            Matrix an = LinearAlgebra.times(1/s, v); //normalizando v
 
             double[] aux = new double[an.getRows()];
             for(int j = 0; j < an.getRows(); j++){
@@ -45,6 +46,7 @@ public abstract class PageRank {
 
             anVector = new Vector(aux.length, aux, false);
 
+            //calculo do erro
             Vector erro = absolute(LinearAlgebra.sum(anVector,subtract(vetorAutoridade)));
 
             if(max(erro) <= criterioParada){

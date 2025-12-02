@@ -29,4 +29,22 @@ public class Vector extends Matrix{
     public void setIsRow(boolean isRow) {
         this.isRow = isRow;
     }
+
+    @Override
+    public void print(){
+        double[] ordered = elements;
+        for(int i = 0;i < this.dim-1; i++){
+            for(int j = 0; j < this.dim - 1 - i; j++){
+                if(ordered[j] < ordered[j+1]){
+                    double aux = ordered[j];
+                    ordered[j] = ordered[j+1];
+                    ordered[j+1] = aux;
+                }
+            }
+        }
+
+        for(int i = 0; i < dim; i++){
+            System.out.printf("%d° Lugar: %.8f\n", i+1, elements[i]);
+        }
+    }
 }

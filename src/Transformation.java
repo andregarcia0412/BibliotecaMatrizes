@@ -1,5 +1,3 @@
-import javax.sound.sampled.Line;
-
 public abstract class Transformation {
     public static Vector translation2D(Vector vector, double dx, double dy) {
         if(vector.getDim() != 2) {
@@ -448,9 +446,9 @@ public abstract class Transformation {
         double[] homogeneous = {vector.getElement(0), vector.getElement(1), vector.getElement(2), 1.0};
 
         double[] matrixElements = {
-                1, 0, 0, 0,
-                0, -1, 0, 0,
-                0, 0, -1, 0,
+                -1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, 1, 0,
                 0, 0, 0, 1
         };
 
@@ -474,9 +472,9 @@ public abstract class Transformation {
         double[] homogeneous = {vector.getElement(0), vector.getElement(1), vector.getElement(2), 1.0};
 
         double[] matrixElements = {
-                -1, 0, 0, 0,
-                0, 1, 0, 0,
-                0, 0, -1, 0,
+                1, 0, 0, 0,
+                0, -1, 0, 0,
+                0, 0, 1, 0,
                 0, 0, 0, 1
         };
 
@@ -500,9 +498,9 @@ public abstract class Transformation {
         double[] homogeneous = {vector.getElement(0), vector.getElement(1), vector.getElement(2), 1.0};
 
         double[] matrixElements = {
-                -1, 0, 0, 0,
-                0, -1, 0, 0,
-                0, 0, 1, 0,
+                1, 0, 0, 0,
+                0, 1, 0, 0,
+                0, 0, -1, 0,
                 0, 0, 0, 1
         };
 
